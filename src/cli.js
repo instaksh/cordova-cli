@@ -43,6 +43,7 @@ var knownOpts = {
     verbose: Boolean,
     version: Boolean,
     help: Boolean,
+    'browserify': Boolean,
     silent: Boolean,
     experimental: Boolean,
     noregistry: Boolean,
@@ -54,7 +55,7 @@ var knownOpts = {
     force: Boolean,
     'save-exact': Boolean,
     // Flags to be passed to `cordova build/run/emulate`
-    debug: Boolean,
+    debug: Boolean,    
     release: Boolean,
     archs: String,
     device: Boolean,
@@ -367,6 +368,7 @@ function cli (inputArgs) {
         options: [],
         verbose: args.verbose || false,
         silent: args.silent || false,
+        browserify: args.browserify || false,
         nohooks: args.nohooks || [],
         searchpath: args.searchpath
     };
@@ -451,6 +453,12 @@ function cli (inputArgs) {
             // User explicitly did not pass in searchpath
             args.searchpath = conf.get('searchpath');
         }
+        
+        if (args.browserify === undefined) {
+            // User explicitly did not pass in browserify
+            args.browserify = conf.get('browserify');
+        }
+        
         if (args['save-exact'] === undefined) {
             // User explicitly did not pass in save-exact
             args['save-exact'] = conf.get('save-exact');
@@ -460,6 +468,7 @@ function cli (inputArgs) {
             searchpath: args.searchpath,
             noregistry: args.noregistry,
             nohooks: args.nohooks,
+            browserify: args.browserify || false,
             cli_variables: cli_vars,
             link: args.link || false,
             save: args.save,
